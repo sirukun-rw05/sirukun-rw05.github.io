@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SIRUKUN · RW 05 Merjosari</title>
+  <meta name="description" content="SIRUKUN, Sistem Informasi Rukun Warga RW 05 Kelurahan Merjosari, Kota Malang.">
+  <meta name="theme-color" content="#5F3DD0">
+  <!-- Tampilan saat tautan dibagikan di WhatsApp / media sosial -->
+  <meta property="og:title" content="SIRUKUN · RW 05 Merjosari">
+  <meta property="og:description" content="Sistem Informasi Rukun Warga RW 05 Kelurahan Merjosari, Kota Malang.">
+  <meta property="og:type" content="website">
+
+  <!-- =========================================================
+       GANTI satu-satunya isian ini dengan URL aplikasi web SIRUKUN
+       (dari Apps Script: Terapkan → Kelola deployment → URL aplikasi web,
+        yang berakhiran /exec). Ubah di DUA tempat: baris meta di bawah
+        dan variabel TUJUAN di bagian script.
+       ========================================================= -->
+  <meta http-equiv="refresh" content="2; url=https://script.google.com/macros/s/AKfycbyEyCQ_BDvwO2YWizqfKX19T8YxoscI90QX9hxaZ-EoP3fQ3Cb0PGejFQbN5Jj3CB1jmA/exec">
+
+  <style>
+    :root { --ungu: #5F3DD0; --ungu-2: #A47BF2; --tinta: #1C2B30; --redup: #56676D; --kertas: #F4F5FA; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--tinta);
+      background: radial-gradient(900px 500px at 85% -10%, rgba(164,123,242,.28), transparent 60%),
+                  radial-gradient(700px 400px at -10% 110%, rgba(95,61,208,.18), transparent 60%), var(--kertas);
+      display: grid; place-items: center; min-height: 100vh; min-height: 100dvh;
+      padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+    }
+    .kartu { width: min(420px, 100%); background: #fff; border-radius: 20px; padding: 32px 28px 26px; text-align: center;
+             box-shadow: 0 20px 50px rgba(40,30,90,.14); border: 1px solid #E6E1F7; }
+    .lencana { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 18px; color: #fff; font-weight: 800; font-size: 1.35rem;
+               display: grid; place-items: center; background: linear-gradient(135deg, var(--ungu), var(--ungu-2));
+               box-shadow: 0 10px 24px rgba(110,69,224,.38); }
+    h1 { margin: 0; font-size: 1.6rem; letter-spacing: .06em; color: var(--ungu); }
+    .sub { margin: 4px 0 22px; color: var(--redup); font-size: .95rem; }
+    .putar { width: 34px; height: 34px; margin: 0 auto 12px; border-radius: 50%; border: 3px solid #E6E1F7; border-top-color: var(--ungu);
+             animation: putar .8s linear infinite; }
+    @keyframes putar { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .putar { animation-duration: 2.5s; } }
+    .status { margin: 0 0 20px; font-weight: 600; }
+    .tombol { display: block; width: 100%; padding: 14px; border-radius: 12px; background: linear-gradient(135deg, var(--ungu), #7B55E6);
+              color: #fff; text-decoration: none; font-weight: 700; font-size: 1rem; }
+    .tombol:hover { filter: brightness(1.05); }
+    .catatan { margin: 14px 0 0; font-size: .8rem; color: var(--redup); }
+    .kaki { margin-top: 22px; font-size: .75rem; color: #8A979C; }
+  </style>
+</head>
+<body>
+  <main class="kartu">
+    <div class="lencana" aria-hidden="true">05</div>
+    <h1>SIRUKUN</h1>
+    <p class="sub">Sistem Informasi Rukun Warga<br>RW 05 Kelurahan Merjosari, Kota Malang</p>
+    <div class="putar" aria-hidden="true"></div>
+    <p class="status" id="status" role="status">Membuka aplikasi…</p>
+    <a class="tombol" id="tombol" href="https://script.google.com/macros/s/AKfycbyEyCQ_BDvwO2YWizqfKX19T8YxoscI90QX9hxaZ-EoP3fQ3Cb0PGejFQbN5Jj3CB1jmA/exec">Buka SIRUKUN</a>
+    <p class="catatan">Jika halaman tidak terbuka otomatis, tekan tombol di atas.</p>
+    <p class="kaki">Copyright &copy; SUGENG HADI SANTOSO 2026</p>
+  </main>
+
+  <script>
+    // ===== GANTI dengan URL aplikasi web SIRUKUN (berakhiran /exec) =====
+    var TUJUAN = 'https://script.google.com/macros/s/AKfycbyEyCQ_BDvwO2YWizqfKX19T8YxoscI90QX9hxaZ-EoP3fQ3Cb0PGejFQbN5Jj3CB1jmA/exec';
+
+    (function () {
+      var status = document.getElementById('status');
+      var tombol = document.getElementById('tombol');
+      if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(TUJUAN)) {
+        status.textContent = 'Alamat aplikasi belum diatur. Hubungi pengurus RW.';
+        document.querySelector('.putar').style.display = 'none';
+        tombol.style.display = 'none';
+        return;
+      }
+      // teruskan parameter tambahan, mis. alamat-pendek/?page=surat  ->  .../exec?page=surat
+      var tujuan = TUJUAN + (location.search || '') + (location.hash || '');
+      tombol.href = tujuan;
+      // replace(): halaman pengalih tidak masuk riwayat, sehingga tombol "Kembali" tidak memantul ke sini lagi
+      location.replace(tujuan);
+    })();
+  </script>
+</body>
+</html>
